@@ -7,15 +7,17 @@
 
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <!--      <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>-->
-        <param name="Target" value="System.out"/>
-        <param name="Threshold" value="DEBUG"/>
+        <!--<param name="Target" value="System.out"/>-->
+        <param name="Threshold" value="WARN"/>
 
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%t] %-5p %c %x - %m%n"/>
         </layout>
     </appender>
-    
-    <logger name="org.springframework"><level value="DEBUG"/></logger>
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
     
     <root>
         <level value="info"/>

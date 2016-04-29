@@ -176,6 +176,12 @@
 			    </div>
 			  </div>
 			  <div class="control-group">
+                  <label class="control-label" for="password">password</label>
+                  <div class="controls">
+                      <input type="text" id="password" name="password" placeholder="password">
+                  </div>
+              </div>
+                <div class="control-group">
 			    <label class="control-label" for="isMaster ">isMaster</label>
 			    <div class="controls">
 			      <input id="isMaster" name="isMaster" type="radio" checked="checked" value="" />true

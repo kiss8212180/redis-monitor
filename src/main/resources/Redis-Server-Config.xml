@@ -4,7 +4,7 @@
       <Redis-Server uuid="0101">
          <name>userWriter</name>
          <description>用户写服务</description>
-         <host>192.168.4.131</host>
+         <host>192.168.1.4</host>
          <port>6379</port>
          <maxActive>300</maxActive>
          <maxIdle>50</maxIdle>
@@ -15,7 +15,7 @@
             <slave uuid="0102">
                <name>userRead</name>
                <description>用户读服务</description>
-               <host>192.168.4.131</host>
+               <host>192.168.1.4</host>
                <port>6379</port>
                <maxActive>300</maxActive>
                <maxIdle>50</maxIdle>

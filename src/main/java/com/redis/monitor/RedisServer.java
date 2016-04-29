@@ -15,6 +15,7 @@ public class RedisServer {
 	private boolean isMaster;
 	private List<RedisServer> slaveRedisServer;
 	private RedisServer masterRedisServer;
+	private String password;
 	
 	public RedisServer() {}
 
@@ -124,5 +125,12 @@ public class RedisServer {
 				+ slaveRedisServer + ", masterRedisServer=" + masterRedisServer
 				+ "]";
 	}
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
