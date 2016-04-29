@@ -3,5 +3,5 @@
          pageEncoding="UTF-8" %>
 <%
     String uuid = RedisJedisPool.getAllRedisServer().get(0).getUuid();
-    response.sendRedirect("/index.htm?uuid=" + uuid);
+    response.sendRedirect(request.getContextPath() + "/index.htm?uuid=" + uuid);
 %>

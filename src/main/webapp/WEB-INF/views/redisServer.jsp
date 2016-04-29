@@ -4,18 +4,21 @@
 <head>
 	<pubTag:resource/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="/resources/jquery-easyui-1.3.4/themes/bootstrap/easyui.css">
-    <link rel="stylesheet" type="text/css" href="/resources/jquery-easyui-1.3.4/themes/icon.css">
-    <link href="/resources/bootstrap-switch/bootstrap-switch.css" rel="stylesheet">
-	<script type="text/javascript" src="/resources/bootstrap-switch/bootstrap-switch.js"></script>
-    
-    <script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/resources/bootstrap/js/bootstrap-scrollspy.js"></script>
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap-button.js"></script>
-	
-	<script type="text/javascript" src="/resources/jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/resources/jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="/resources/jquery-easyui-1.3.4/plugins/jquery.dialog.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="<c:url value="/resources/jquery-easyui-1.3.4/themes/bootstrap/easyui.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/jquery-easyui-1.3.4/themes/icon.css"/>">
+    <link href="<c:url value="/resources/bootstrap-switch/bootstrap-switch.css"/>" rel="stylesheet">
+    <script type="text/javascript" src="<c:url value="/resources/bootstrap-switch/bootstrap-switch.js"/>"></script>
+
+    <script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-scrollspy.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-button.js"/>"></script>
+
+    <script type="text/javascript" src="<c:url value="/resources/jquery-easyui-1.3.4/jquery.easyui.min.js"/>"></script>
+    <script type="text/javascript"
+            src="<c:url value="/resources/jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"/>"></script>
+    <script type="text/javascript"
+            src="<c:url value="/resources/jquery-easyui-1.3.4/plugins/jquery.dialog.js"/>"></script>
 	<title>Angel</title>
 	
 </head>
@@ -23,9 +26,9 @@
 	<pubTag:header/>
 	<h2>redis服务配置</h2>
     <table id="dg" title="redis服务列表" class="easyui-datagrid" style="width:700px;height:250px"
-            url="/server/redisServerList.htm"
-            toolbar="#toolbar" 
-            rownumbers="true" fitColumns="true" singleSelect="true" fit="true">
+           url="<c:url value="/server/redisServerList.htm"/>"
+           toolbar="#toolbar"
+           rownumbers="true" fitColumns="true" singleSelect="true" fit="true">
         <thead>
             <tr>
                 <th field="uuid" width="50">uuid</th>
@@ -74,7 +77,7 @@
         			if (r) {
         				var uuid = selectRow[0].uuid;
         				$.ajax({
-        					url : '/server/removeServer.htm',
+                            url: window.contextPath + '/server/removeServer.htm',
         					data : {'uuid' : uuid},
         					dataType : 'json',
         					method : 'get',
@@ -82,7 +85,7 @@
         					success : function(result) {
         							$('#dg').datagrid('reload');
         							$('#dg').datagrid('clearSelections');
-        							window.location.href = '/server/redisServer.htm';
+                                window.location.href = window.contextPath + '/server/redisServer.htm';
         						//	$.messager.show({'title' : '提示','msg':'删除成功!'});
         					}
         				});
@@ -156,7 +159,8 @@
               <h5 id="myModalLabel">新增</h5>
             </div>
             <div class="modal-body">
-            <form class="form-horizontal e-form" action="/server/newServer.htm" method="post" id="newServer">
+                <form class="form-horizontal e-form" action="<c:url value="/server/newServer.htm"/>" method="post"
+                      id="newServer">
 			  <div class="control-group">
 			    <label class="control-label" for="uuid">uuid</label>
 			    <div class="controls">

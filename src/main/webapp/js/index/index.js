@@ -16,7 +16,7 @@ $(document).ready(function() {
 	                        // set up the updating of the chart each second
 	                        var series = this.series[0];
 	                        setInterval(function() {
-	                        	$.getJSON('/chartMemery.htm' , function(data){
+								$.getJSON(window.contextPath + '/chartMemery.htm', function (data) {
 	        						var x = data.hashMap.create_time , // current time
 	        						y = data.hashMap.used_memory/1024 ;
 	        						series.addPoint([x, y], true, true );
@@ -82,7 +82,7 @@ $(document).ready(function() {
 	        				// set up the updating of the chart each second
 	        				var series = this.series[0];
 	        				setInterval(function() {
-	        					$.getJSON('/chartKeys.htm' , function(data){
+								$.getJSON(window.contextPath + '/chartKeys.htm', function (data) {
 	        						var x = data.hashMap.create_time , // current time
 	        						y = data.hashMap.dbSize ;
 	        						series.addPoint([x, y], true, true );

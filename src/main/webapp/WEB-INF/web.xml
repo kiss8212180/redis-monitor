@@ -53,7 +53,7 @@
 
 
     <error-page>
-        <error-code>500</error-code>
+        <error-code>404</error-code>
         <location>/welcome.html</location>
     </error-page>
 

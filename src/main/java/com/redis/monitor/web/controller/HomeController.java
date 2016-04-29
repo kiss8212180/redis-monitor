@@ -96,15 +96,16 @@ public class HomeController extends BaseProfileController {
 				|| host.contains("localhost")
 				) {
 			session.setAttribute("login", 1);
-			return "redirect:/main.jsp";
+			return "forward:/";
+//			return "redirect:";
 		}
 		return "login";
 	}
 
-	@RequestMapping(value = "logout.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "logout.htm", method = {RequestMethod.GET, RequestMethod.POST})
 	public String logout(HttpSession session) {
-		session.invalidate();
-		return "login";
+		session.removeAttribute("login");
+		return "redirect:login";
 	}
 
 }

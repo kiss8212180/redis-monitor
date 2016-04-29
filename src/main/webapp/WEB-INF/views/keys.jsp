@@ -5,16 +5,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>redisMonitor</title>
 	<pubTag:resource/>
-	<link href="/resources/json/s.css" rel="stylesheet">
-	<script type="text/javascript" src="resources/bootstrap/js/bootstrap.js"></script>
-	<script type="text/javascript" src="resources/bootstrap/js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript" src="resources/bootstrap/js/bootstrap-scrollspy.js"></script>
-	<script type="text/javascript" src="resources/bootstrap/js/bootstrap-button.js"></script>
-	
-	<script type="text/javascript" src="/resources/json/m.js"></script>
-	<script type="text/javascript" src="/resources/json/c.js"></script>
-	<script type="text/javascript" src="/resources/xml/formatXML.js"></script>
-	<script src="/js/keys/keys.js"></script>
+	<link href="<c:url value="/resources/json/s.css"/>" rel="stylesheet">
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-dropdown.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-scrollspy.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-button.js"/>"></script>
+
+	<script type="text/javascript" src="<c:url value="/resources/json/m.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/json/c.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/xml/formatXML.js"/>"></script>
+	<script src="<c:url value="/js/keys/keys.js"/>"></script>
 	<script>
 		uuid = '${param.uuid}' ;
 		$._messengerDefaults = {

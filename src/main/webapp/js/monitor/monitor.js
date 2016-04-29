@@ -44,7 +44,7 @@ $(function(){
 	});
 	
 	function start(){
-		$.getJSON('/monitor/start.htm?uuid=' + uuid , function(data){
+		$.getJSON(window.contextPath + '/monitor/start.htm?uuid=' + uuid, function (data) {
 			if(data.status == 0){
 				refresh() ;
 			} else {
@@ -54,7 +54,7 @@ $(function(){
 	}
 	
 	function stop(){
-		$.getJSON('/monitor/stop.htm?uuid=' + uuid , function(data){
+		$.getJSON(window.contextPath + '/monitor/stop.htm?uuid=' + uuid, function (data) {
 			if(data.status == 0){
 				clearTimeout(window.monitorTimer) ; 
 				isStart = false ;
@@ -70,8 +70,8 @@ $(function(){
 		window.monitorTimer = setTimeout(function(){
 			refresh() ;
 		} , 1000 ) ;
-		
-		$.getJSON('/monitor/data.htm?uuid=' + uuid , function(data){
+
+		$.getJSON(window.contextPath + '/monitor/data.htm?uuid=' + uuid, function (data) {
 			$.each(data , function(i , v ){
 				count++ ;
 				while(count > bufferSize) {

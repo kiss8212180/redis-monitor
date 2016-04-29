@@ -5,13 +5,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Angel</title>
 	<pubTag:resource/>
-	<link href="/resources/bootstrap-switch/bootstrap-switch.css" rel="stylesheet">
-	<script type="text/javascript" src="/resources/bootstrap-switch/bootstrap-switch.js"></script>
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap.js"></script>
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap-scrollspy.js"></script>
-	<script type="text/javascript" src="/resources/bootstrap/js/bootstrap-button.js"></script>
-	<script type="text/javascript" src="/js/monitor/monitor.js"></script>
+	<link href="<c:url value="/resources/bootstrap-switch/bootstrap-switch.css"/>" rel="stylesheet">
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap-switch/bootstrap-switch.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-dropdown.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-scrollspy.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap-button.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/monitor/monitor.js"/>"></script>
 	<script>
 		uuid = '${param.uuid}' ;
 	</script>
