@@ -30,11 +30,11 @@ public class RedisConfigInit {
 	private List<RedisServer> listRS;
 
 	static {
-		if (!Constants.REDIS_SERVER_CONFIG_PATH.equals(""))
-			FILE_PATH = Constants.REDIS_SERVER_CONFIG_PATH;
-
-		if (!Constants.REDIS_SERVER_CONFIG_FILE_NAME.equals(""))
-			FILE_NAME = Constants.REDIS_SERVER_CONFIG_FILE_NAME;
+//		if (!Constants.REDIS_SERVER_CONFIG_PATH.equals(""))
+//			FILE_PATH = Constants.REDIS_SERVER_CONFIG_PATH;
+//
+//		if (!Constants.REDIS_SERVER_CONFIG_FILE_NAME.equals(""))
+//			FILE_NAME = Constants.REDIS_SERVER_CONFIG_FILE_NAME;
 	}
 
 	public void init() {

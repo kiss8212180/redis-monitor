@@ -1,24 +1,15 @@
 package com.redis.monitor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import com.redis.monitor.RedisServer;
 import com.redis.monitor.redis.BasicRedisCacheServer;
 import com.redis.monitor.redis.RedisCacheServer;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class RedisJedisPool {
 	
 	private static Map<String,Redis> map = new ConcurrentHashMap<String, Redis>();
-	
-	public static final String DEFAULT_UUID = Constants.DEFAULT_UUID;
 	
 	public static int LOAD_SIZE = 0;
 	
