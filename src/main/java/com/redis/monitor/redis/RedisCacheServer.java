@@ -1,25 +1,28 @@
 package com.redis.monitor.redis;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.redis.monitor.FeJedisMonitor;
+import com.redis.monitor.RedisServer;
+import com.redis.monitor.json.FastJson;
 import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisMonitor;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.util.Slowlog;
 
-import com.redis.monitor.FeJedisMonitor;
-import com.redis.monitor.json.FastJson;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RedisCacheServer implements BasicRedisCacheServer {
 	private JedisPool jedisPool;
 
 	public static final Integer DEFAULT_EXPIRE_TIME = 60 * 60 * 24;
-	
-	public RedisCacheServer (final String host,final int port,int maxActive,int maxIdle,int maxWait,boolean testOnBorrow) {
+
+	public RedisCacheServer(RedisServer rs) {
+		this(rs.getHost(), rs.getPort(), rs.getPassword(), rs.getMaxActive(), rs.getMaxIdle(), rs.getMaxWait(), rs.isTestOnBorrow());
+	}
+
+	public RedisCacheServer(final String host, final int port, String password, int maxActive, int maxIdle, int maxWait, boolean testOnBorrow) {
 		JedisPoolConfig jpConfig = new JedisPoolConfig();
 		if (maxActive == 0) maxActive = 10;
 		jpConfig.setMaxActive(maxActive);
@@ -28,7 +31,10 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 		if (maxWait == 0) maxWait = 10;
 		jpConfig.setMaxWait(maxWait);
 		jpConfig.setTestOnBorrow(testOnBorrow);
-		jedisPool = new JedisPool(jpConfig, host,port);
+		if (password != null) {
+			jedisPool = new JedisPool(jpConfig, host, port, DEFAULT_EXPIRE_TIME, password);
+		} else
+			jedisPool = new JedisPool(jpConfig, host, port, DEFAULT_EXPIRE_TIME);
 	}
 
 	public List<String> get(String key, String mapKey) {
@@ -36,39 +42,39 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 		try {
 			jedis = jedisPool.getResource();
 			List<String> list = jedis.hmget(key, mapKey);
- 			return list;
+			return list;
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-		
+
 	}
-	
+
 	public List<byte[]> get(byte[] key, byte[] mapKey) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
 			List<byte[]> list = jedis.hmget(key, mapKey);
- 			return list;
+			return list;
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-		
+
 	}
-	
-	
+
+
 	public List<String> get(String key, String[] mapKeys) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
 			List<String> list = jedis.hmget(key, mapKeys);
- 			return list;
+			return list;
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-		
+
 	}
 
 	public String get(String key) {
@@ -82,8 +88,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public <T> T get(String key,Class<T> clazz) {
+
+	public <T> T get(String key, Class<T> clazz) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -93,7 +99,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 
 	public Set<String> getMapKeys(String key) {
 		Jedis jedis = null;
@@ -106,8 +112,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	
+
+
 	public Set<String> getKeysByPattern(String patternKey) {
 		Jedis jedis = null;
 		try {
@@ -144,8 +150,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public String getMapVal(String cacheKey,String mapKey) {
+
+	public String getMapVal(String cacheKey, String mapKey) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -176,8 +182,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 			boolean flag = jedis.exists(byteKey);
 			return flag;
 		} finally {
-		    if (jedis != null)
-		    	jedisPool.returnResource(jedis);
+			if (jedis != null)
+				jedisPool.returnResource(jedis);
 		}
 	}
 
@@ -196,7 +202,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public List<String> getList(String key) {
 		Jedis jedis = null;
 		try {
@@ -207,7 +213,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String brpopDataQueue(String key) {
 		Jedis jedis = null;
 		try {
@@ -218,7 +224,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String blpopDataQueue(String key) {
 		Jedis jedis = null;
 		try {
@@ -229,7 +235,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public long llenQueueSize(String key) {
 		Jedis jedis = null;
 		try {
@@ -240,7 +246,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String getRedisInfo() {
 		Jedis jedis = null;
 		try {
@@ -254,21 +260,21 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	
+
+
 	public boolean isConnect() {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
-			return true ;
-		} catch(Exception e){
-			return false ;
+			return true;
+		} catch (Exception e) {
+			return false;
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String ping() {
 
 		Jedis jedis = null;
@@ -283,7 +289,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String flushAll() {
 		Jedis jedis = null;
 		try {
@@ -297,7 +303,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public String flushDb() {
 		Jedis jedis = null;
 		try {
@@ -311,8 +317,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	
+
+
 	public void monitor() {
 		Jedis jedis = null;
 		try {
@@ -326,9 +332,9 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);*/
 		}
 	}
-	
-    public List<String> configGet(String pattern) {
-    	Jedis jedis = null;
+
+	public List<String> configGet(String pattern) {
+		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
 			//TODO 获取redis服务器信息
@@ -339,13 +345,13 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-    }
-	
+	}
+
 	public List<String> configGetAll() {
 		return configGet("*");
 	}
-	
-	public String configSet(String key,String value) {
+
+	public String configSet(String key, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -358,7 +364,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public Long dbSize() {
 		Jedis jedis = null;
 		try {
@@ -372,15 +378,15 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public void save(String key, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
 			jedis.set(key, value);
 		} finally {
-		    if (jedis != null)
-		    	jedisPool.returnResource(jedis);
+			if (jedis != null)
+				jedisPool.returnResource(jedis);
 		}
 	}
 
@@ -395,10 +401,10 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
-				
+
 		}
-		
-		
+
+
 	}
 
 	public void save(String key, Object obj) {
@@ -429,7 +435,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 	public void replace(String key, Map<String, String> map, int expireTime) {
 		Jedis jedis = null;
 		try {
-			jedis =  jedisPool.getResource();
+			jedis = jedisPool.getResource();
 			jedis.del(key);
 			save(key, map, expireTime);
 		} finally {
@@ -467,10 +473,10 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-		
+
 	}
-	
-	public void saveMapVal(String cacheKey,String mapKey,String mapVal) {
+
+	public void saveMapVal(String cacheKey, String mapKey, String mapVal) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -480,7 +486,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public void saveMapVal(byte[] cacheKey, byte[] mapKey, byte[] mapVal) {
 		Jedis jedis = null;
 		try {
@@ -501,9 +507,9 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
 		}
-		
+
 	}
-	
+
 	public void del(String... keys) {
 		Jedis jedis = null;
 		try {
@@ -531,7 +537,6 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 	}
 
 
-
 	public void saveSet(String key, String str, int expireTime) {
 		Jedis jedis = null;
 		try {
@@ -556,8 +561,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public void saveList(String key,List<String> list,int expireTime) {
+
+	public void saveList(String key, List<String> list, int expireTime) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -572,12 +577,12 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public void saveList(String key,List<String> list) {
+
+	public void saveList(String key, List<String> list) {
 		saveList(key, list, 0);
 	}
-	
-	public void lpushQueue(String key,String data) {
+
+	public void lpushQueue(String key, String data) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -587,8 +592,8 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public void rpushQueue(String key,String data) {
+
+	public void rpushQueue(String key, String data) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
@@ -598,7 +603,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public List<Slowlog> slowlogs() {
 		Jedis jedis = null;
 		try {
@@ -609,7 +614,7 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
+
 	public long ttl(String key) {
 		Jedis jedis = null;
 		try {
@@ -620,12 +625,12 @@ public class RedisCacheServer implements BasicRedisCacheServer {
 				jedisPool.returnResource(jedis);
 		}
 	}
-	
-	public String set(String key , String value) {
+
+	public String set(String key, String value) {
 		Jedis jedis = null;
 		try {
 			jedis = jedisPool.getResource();
-			return jedis.set(key, value) ;
+			return jedis.set(key, value);
 		} finally {
 			if (jedis != null)
 				jedisPool.returnResource(jedis);
